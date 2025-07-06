@@ -27,6 +27,21 @@ function getDistanceKm(lat1, lon1, lat2, lon2) {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
+app.get('/driver-exists', async (req, res) => {
+  const { phone } = req.query;
+  const snapshot = await db.ref("drivers/" + phone).once('value');
+  if (snapshot.exists()) {
+    const driver = snapshot.val();
+    res.send({
+      firstName: driver.firstName,
+      lastName: driver.lastName,
+      plate_number: driver.plate
+    });
+  } else {
+    res.status(404).send({ exists: false });
+  }
+});
+
 // POST /register-driver
 app.post('/register-driver', async (req, res) => {
   const { phone, firstName, lastName, plate } = req.body;
