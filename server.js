@@ -9,7 +9,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const keyB64 = process.env.FIREBASE_KEY_BASE64;
-console.log("FIREBASE_KEY_BASE64 is", process.env.FIREBASE_KEY_BASE64 ? "set" : "NOT set");
+console.log("FIREBASE_KEY_BASE64 IS", process.env.FIREBASE_KEY_BASE64 ? "set" : "NOT set");
 const serviceAccount = JSON.parse(Buffer.from(keyB64, 'base64').toString('utf8'));
 
 admin.initializeApp({
