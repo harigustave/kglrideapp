@@ -1,5 +1,6 @@
-const express = require('express');
 require('dotenv').config();
+const admin = require('firebase-admin');
+const express = require('express');
 const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -8,9 +9,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const keyB64 = process.env.FIREBASE_KEY_BASE64;
+// console.log("DECODED KEY:"+process.env.FIREBASE_KEY_BASE64);
 const serviceAccount = JSON.parse(Buffer.from(keyB64, 'base64').toString('utf8'));
-
-const admin = require('firebase-admin');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
