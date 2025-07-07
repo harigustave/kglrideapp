@@ -1,17 +1,20 @@
 const express = require('express');
+require('dotenv').config();
 const app = express();
 const cors = require('cors');
-const admin = require('firebase-admin');
 const bodyParser = require('body-parser');
 
 app.use(cors());
 app.use(bodyParser.json());
 
-const serviceAccount = require('./firebase-key.json');
+const keyB64 = process.env.FIREBASE_KEY_BASE64;
+const serviceAccount = JSON.parse(Buffer.from(keyB64, 'base64').toString('utf8'));
+
+const admin = require('firebase-admin');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://kglrideapp-default-rtdb.asia-southeast1.firebasedatabase.app"
+  databaseURL: "https://kglrideapp-14e83-default-rtdb.asia-southeast1.firebasedatabase.app"
 });
 
 const db = admin.database();
